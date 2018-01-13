@@ -1,0 +1,47 @@
+service:
+  name: aws-nodejs-typescript
+
+# Load custom configuration values to keep out of github
+custom: ${file(./private.config.yml)}
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  stage: prod
+  runtime: nodejs6.10
+  region: us-east-1
+  deploymentBucket:
+    name: ${self:custom.bucketName}
+
+package: # Optional deployment packaging configuration
+  include: # Specify the directories and files which should be included in the deployment package
+    - src/**
+    - handler.ts
+  exclude: # Specify the directories and files which should be excluded in the deployment package
+    - .git/**
+
+resources:  
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:custom.apiName} # The custom name for the API
+
+functions:
+  logPost:
+    handler: handler.logPost
+    name: ${self:custom.lambdaPrefix}-post
+    events:
+      - http: 
+          path: /
+          method: post
+  logGet:
+    handler: handler.logGet
+    name: ${self:custom.lambdaPrefix}-get
+    events:
+      - http: 
+          path: /
+          method: get
