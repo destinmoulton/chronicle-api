@@ -29,19 +29,20 @@ provider:
 
 functions:
   logPost:
-    handler: handler.logPost
+    handler: src/add.add
     name: ${self:custom.lambdaPrefix}-post
     events:
       - http: 
           path: /
           method: post
-  logGet:
-    handler: handler.logGet
-    name: ${self:custom.lambdaPrefix}-get
+  logQuery:
+    handler: src/query.query
+    name: ${self:custom.lambdaPrefix}-query
     events:
       - http: 
-          path: /
-          method: get
+          path: /query
+          method: post
+          
 
 resources:  
   Resources:
