@@ -6,7 +6,7 @@ Thoth is written using the fantastic [Serverless](https://github.com/serverless/
 
 ### Configuration
 
-Custom configuration should be put into a file called private.config.yml. This file is not provided in this repo as it may contain private configuration information.
+Custom configuration should be put into a file called private.config.yml. Rename the private.config.template file and replace the configuration values with your own.
 
 ### Not REST
 
