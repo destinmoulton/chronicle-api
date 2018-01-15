@@ -5,7 +5,14 @@ import * as uuid from "uuid";
 const logTableName = "GizmoVaultLog";
 const db = new DynamoDB.DocumentClient();
 
-export const logPost: Handler = (
+/**
+ * Put POSTed logs into the db.
+ *
+ * @param event APIGatewayEvent
+ * @param context Context
+ * @param cb Callback
+ */
+export const add: Handler = (
     event: APIGatewayEvent,
     context: Context,
     cb: Callback
@@ -39,24 +46,6 @@ export const logPost: Handler = (
         statusCode: 200,
         headers: { "Content-Type": "text/plain" },
         body: "Added log item."
-    };
-
-    cb(null, response);
-};
-
-export const logGet: Handler = (
-    event: APIGatewayEvent,
-    context: Context,
-    cb: Callback
-) => {
-    console.log("logGet called");
-    console.log(event);
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: "logGet called!",
-            input: event
-        })
     };
 
     cb(null, response);
