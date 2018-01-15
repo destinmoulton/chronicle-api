@@ -1,12 +1,12 @@
 ### What is thoth?
 
-Thoth is a log system that can be deployed on AWS Lambda. It uses a simple POST request to store data and has a simple query format for getting data.
+Thoth is a logging API that can be deployed on AWS Lambda. It uses a simple POST request to store data and has a simple query format for getting data.
 
 Thoth is written using the fantastic [Serverless](https://github.com/serverless/) framework.
 
 ### Configuration
 
-Custom configuration should be put into a file called private.config.yml. Rename the private.config.template file and replace the configuration values with your own.
+Custom configuration should be put into a file called private.config.yml. Rename the private.config.template file and replace the configuration values with your own. After you make your configuration changes, just run `serverless deploy` to create the API on AWS.
 
 ### Not REST
 
