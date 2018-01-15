@@ -1,0 +1,9 @@
+# 
+# RENAME THIS FILE: private.config.yml
+# Replace all the <...> with your values.
+# 
+
+bucketName: <your_desired_bucket_name_here>
+apiName: <your_desired_api_name_here>
+lambdaPrefix: <your_lambda_naming_prefix>
+tableName: <your_dynamodb_log_table_name>
