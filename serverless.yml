@@ -23,13 +23,6 @@ package: # Optional deployment packaging configuration
   exclude: # Specify the directories and files which should be excluded in the deployment package
     - .git/**
 
-resources:  
-  Resources:
-    ApiGatewayRestApi:
-      Type: AWS::ApiGateway::RestApi
-      Properties:
-        Name: ${self:custom.apiName} # The custom name for the API
-
 functions:
   logPost:
     handler: handler.logPost
@@ -46,8 +39,12 @@ functions:
           path: /
           method: get
 
-resources:
+resources:  
   Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:custom.apiName} # The custom name for the API
     ThothDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
