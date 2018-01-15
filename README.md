@@ -14,7 +14,9 @@ This does not create a REST compliant API. Queries are performed via POSTed JSON
 
 ### Query Format
 
-Queries to the /query portion of the API are sent via POST request.
+Queries to the /query portion of the API are sent via POST request. The queries are run as a DynamoDB "scan" so you can query inside the stored data rather than by key/index.
+
+Example Query:
 
 ```
 {
