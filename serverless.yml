@@ -15,13 +15,17 @@ provider:
   region: us-east-1
   deploymentBucket:
     name: ${self:custom.bucketName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}"
 
-package: # Optional deployment packaging configuration
-  include: # Specify the directories and files which should be included in the deployment package
-    - src/**
-    - handler.ts
-  exclude: # Specify the directories and files which should be excluded in the deployment package
-    - .git/**
 
 functions:
   logPost:
