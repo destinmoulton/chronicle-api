@@ -46,8 +46,11 @@ export const add: Handler = (
     // Always return a positive response.
     const response = {
         statusCode: 200,
-        headers: { "Content-Type": "text/plain" },
-        body: "Added log item."
+        headers: {
+            "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Content-Type"
+        }
     };
 
     cb(null, response);
