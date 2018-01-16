@@ -24,12 +24,14 @@ export const add: Handler = (
     const type = data.type || "log";
     const app = data.app || "Unknown App";
     const info = data.info || data;
+    const client = data.client || "";
 
     const params = {
         TableName: logTableName,
         Item: {
             id: uuid.v1(),
             app,
+            client,
             type,
             info,
             event,
