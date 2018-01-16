@@ -28,6 +28,13 @@ provider:
 
 
 functions:
+  CORS:
+    handler: src/cors.cors
+    name: ${self:custom.lambdaPrefix}-cors
+    events:
+      - http:
+          path: /
+          method: options
   logPost:
     handler: src/add.add
     name: ${self:custom.lambdaPrefix}-post
