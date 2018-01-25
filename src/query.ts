@@ -21,7 +21,11 @@ export const query: Handler = (
     if (!data.query) {
         cb(null, {
             statusCode: 400,
-            headers: { "Content-Type": "text/plain" },
+            headers: {
+                "Content-Type": "text/plain",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type"
+            },
             body: "No query provided."
         });
     }
@@ -59,11 +63,20 @@ export const query: Handler = (
         if (err) {
             cb(null, {
                 statusCode: 400,
-                headers: { "Content-Type": "text/plain" },
+                headers: {
+                    "Content-Type": "text/plain",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Content-Type"
+                },
                 body: "Query is invalid." + err
             });
         }
         const response = {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type"
+            },
             statusCode: 200,
             body: JSON.stringify({
                 data
