@@ -42,13 +42,20 @@ functions:
       - http: 
           path: /
           method: post
-  logQuery:
+  queryPost:
     handler: src/query.query
-    name: ${self:custom.lambdaPrefix}-query
+    name: ${self:custom.lambdaPrefix}-query-post
     events:
       - http: 
           path: /query
           method: post
+  queryOptions:
+    handler: src/cors.cors
+    name: ${self:custom.lambdaPrefix}-query-options
+    events:
+      - http: 
+          path: /query
+          method: options
           
 
 resources:  
