@@ -37,18 +37,20 @@ export const query: Handler = (
     let ExpressionAttributeNames = {};
     let hasRun = false;
     parts.forEach(part => {
-        if (hasRun) {
-            const booleanOperator = part.bool || "AND";
-            FilterExpression += ` ${booleanOperator} `;
+        if (part !== null && part.name !== undefined) {
+            if (hasRun) {
+                const booleanOperator = part.bool || "AND";
+                FilterExpression += ` ${booleanOperator} `;
+            }
+
+            const comparison = part.comparison || "=";
+            const attributeAlias = part.attributeAlias || part.name;
+
+            FilterExpression += `#${attributeAlias} ${comparison} :${attributeAlias} `;
+            ExpressionAttributeNames["#" + attributeAlias] = part.name;
+            ExpressionAttributeValues[":" + attributeAlias] = part.value;
+            hasRun = true;
         }
-
-        const comparison = part.comparison || "=";
-        const attributeAlias = part.attributeAlias || part.name;
-
-        FilterExpression += `#${attributeAlias} ${comparison} :${attributeAlias} `;
-        ExpressionAttributeNames["#" + attributeAlias] = part.name;
-        ExpressionAttributeValues[":" + attributeAlias] = part.value;
-        hasRun = true;
     });
 
     const params = {
