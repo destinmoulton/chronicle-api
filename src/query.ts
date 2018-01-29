@@ -43,10 +43,11 @@ export const query: Handler = (
         }
 
         const comparison = part.comparison || "=";
+        const attributeAlias = part.attributeAlias || part.name;
 
-        FilterExpression += `#${part.name} ${comparison} :${part.name} `;
-        ExpressionAttributeNames["#" + part.name] = part.name;
-        ExpressionAttributeValues[":" + part.name] = part.value;
+        FilterExpression += `#${attributeAlias} ${comparison} :${part.name} `;
+        ExpressionAttributeNames["#" + attributeAlias] = part.name;
+        ExpressionAttributeValues[":" + attributeAlias] = part.value;
         hasRun = true;
     });
 
