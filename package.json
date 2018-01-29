@@ -1,9 +1,9 @@
 {
-    "name": "aws-nodejs-typescript",
-    "version": "1.0.0",
-    "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
+    "name": "chronicle-api",
+    "version": "0.0.2",
+    "author": "Destin Moulton",
     "license": "MIT",
-    "description": "Serverless webpack example using Typescript",
+    "description": "Serverless API for app logging and reporting.",
     "main": "handler.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"

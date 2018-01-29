@@ -1,8 +1,8 @@
-### What is thoth?
+### What is Chronicle API?
 
-Thoth is a logging API that can be deployed on AWS Lambda. It uses a simple POST request to store data and has a simple query format for getting data.
+Chronicle is a logging API that can be deployed on AWS Lambda. It uses a simple POST request to store data and has a simple query format for getting log data.
 
-Thoth is written using the fantastic [Serverless](https://github.com/serverless/) framework.
+Chronicle is written using the fantastic [Serverless](https://github.com/serverless/) framework.
 
 ### Configuration
 
