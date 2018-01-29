@@ -45,7 +45,7 @@ export const query: Handler = (
         const comparison = part.comparison || "=";
         const attributeAlias = part.attributeAlias || part.name;
 
-        FilterExpression += `#${attributeAlias} ${comparison} :${part.name} `;
+        FilterExpression += `#${attributeAlias} ${comparison} :${attributeAlias} `;
         ExpressionAttributeNames["#" + attributeAlias] = part.name;
         ExpressionAttributeValues[":" + attributeAlias] = part.value;
         hasRun = true;
