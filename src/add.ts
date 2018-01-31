@@ -5,7 +5,9 @@ import * as uuid from "uuid";
 import { forOwn, isArray, isPlainObject, isString } from "lodash";
 
 const logTableName = "GizmoVaultLog";
-const db = new DynamoDB.DocumentClient();
+const db = new DynamoDB.DocumentClient({
+    convertEmptyValues: true
+});
 
 /**
  * Put POSTed logs into the db.
@@ -23,7 +25,7 @@ export const add: Handler = (
 
     const data = JSON.parse(event.body);
 
-    let cleanClient = {};
+    let cleanClient = data.client;
     if (data.client !== undefined) {
         cleanClient = cleanEmptyStrings(data.client);
     }
@@ -70,24 +72,17 @@ export const add: Handler = (
 
 /**
  * Loop over elements in arrays and objects and recursively
- * remove undefined strings.
+ * replace empty strings with CHRONICLE_PLACEHOLDER_EMPTYSTRING
  *
  * @param obj Object (array, object, string...)
  */
 const cleanEmptyStrings = obj => {
-    if (isPlainObject(obj)) {
+    if (isString(obj) && obj === "") {
+        return "CHRONICLE_PLACEHOLDER_EMPTYSTRING";
+    } else if (isPlainObject(obj)) {
         const newObj = {};
         forOwn(obj, (val, key) => {
-            let newVal = val;
-            if (isString(val) && val === "") {
-                newVal = undefined;
-            }
-
-            if (isPlainObject(val)) {
-                // Recursively clean sub-objects
-                newVal = cleanEmptyStrings(val);
-            }
-            newObj[key] = newVal;
+            newObj[key] = cleanEmptyStrings(val);
         });
         return newObj;
     } else if (isArray(obj)) {
