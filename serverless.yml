@@ -56,6 +56,20 @@ functions:
       - http: 
           path: /query
           method: options
+  appsGet:
+    handler: src/apps.apps
+    name: ${self:custom.lambdaPrefix}-apps-get
+    events:
+      - http: 
+          path: /apps
+          method: get
+  appsOptions:
+    handler: src/cors.cors
+    name: ${self:custom.lambdaPrefix}-apps-options
+    events:
+      - http: 
+          path: /apps
+          method: options
           
 
 resources:  
