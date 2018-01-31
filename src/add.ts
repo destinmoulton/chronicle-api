@@ -2,7 +2,7 @@ import { APIGatewayEvent, Callback, Context, Handler } from "aws-lambda";
 import { DynamoDB } from "aws-sdk";
 
 import * as uuid from "uuid";
-import clean from "lodash-clean";
+import { forOwn, isArray, isPlainObject, isString } from "lodash";
 
 const logTableName = "GizmoVaultLog";
 const db = new DynamoDB.DocumentClient();
@@ -25,12 +25,12 @@ export const add: Handler = (
 
     let cleanClient = {};
     if (data.client !== undefined) {
-        cleanClient = clean(data.client);
+        cleanClient = cleanEmptyStrings(data.client);
     }
 
     let cleanData = {};
     if (data.info !== undefined) {
-        cleanData = clean(data.info);
+        cleanData = cleanEmptyStrings(data.info);
     }
 
     const type = data.type || "log";
@@ -66,4 +66,37 @@ export const add: Handler = (
     };
 
     cb(null, response);
+};
+
+/**
+ * Loop over elements in arrays and objects and recursively
+ * remove undefined strings.
+ *
+ * @param obj Object (array, object, string...)
+ */
+const cleanEmptyStrings = obj => {
+    if (isPlainObject(obj)) {
+        const newObj = {};
+        forOwn(obj, (val, key) => {
+            let newVal = val;
+            if (isString(val) && val === "") {
+                newVal = undefined;
+            }
+
+            if (isPlainObject(val)) {
+                // Recursively clean sub-objects
+                newVal = cleanEmptyStrings(val);
+            }
+            newObj[key] = newVal;
+        });
+        return newObj;
+    } else if (isArray(obj)) {
+        const newArr = [];
+        obj.forEach(val => {
+            // Recursively clean each element in array
+            newArr.push(cleanEmptyStrings(val));
+        });
+        return newArr;
+    }
+    return obj;
 };
