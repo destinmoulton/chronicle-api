@@ -70,7 +70,20 @@ functions:
       - http: 
           path: /apps
           method: options
-          
+  logtypesOptions:
+    handler: src/cors.cors
+    name: ${self:custom.lambdaPrefix}-logtypes-options
+    events:
+      - http: 
+          path: /logtypes
+          method: options
+  logtypesPost:
+    handler: src/logtypes.logtypes
+    name: ${self:custom.lambdaPrefix}-logtypes-post
+    events:
+      - http: 
+          path: /logtypes
+          method: post
 
 resources:  
   Resources:
