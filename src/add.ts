@@ -31,8 +31,8 @@ export const add: Handler = (
     }
 
     let cleanData = {};
-    if (data.info !== undefined) {
-        cleanData = cleanEmptyStrings(data.info);
+    if (data.data !== undefined) {
+        cleanData = cleanEmptyStrings(data.data);
     }
 
     const type = data.type || "log";
@@ -45,7 +45,7 @@ export const add: Handler = (
             app,
             client: cleanClient,
             type,
-            info: cleanData,
+            data: cleanData,
             event,
             createdAt: timestamp
         }
