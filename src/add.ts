@@ -28,6 +28,8 @@ export const add: Handler = (
     let cleanClient = data.client;
     if (data.client !== undefined) {
         cleanClient = cleanEmptyStrings(data.client);
+        cleanClient.userAgent = cleanClient.userAgent || event.requestContext.identity.userAgent;
+        cleanClient.ip = event.requestContext.identity.sourceIp;
     }
 
     let cleanData = {};
