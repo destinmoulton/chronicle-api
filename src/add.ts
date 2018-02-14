@@ -60,7 +60,7 @@ export const add: Handler = (
     console.log(params);
 
     db.put(params, error => {
-        if (error) console.error(error);
+        if (error) console.error(error, event);
     });
 
     // Always return a positive response.
