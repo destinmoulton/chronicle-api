@@ -1,6 +1,8 @@
 import { APIGatewayEvent, Callback, Context, Handler } from "aws-lambda";
 import { DynamoDB } from "aws-sdk";
 
+import { createHash } from "crypto";
+
 import * as uuid from "uuid";
 import { forOwn, isArray, isPlainObject, isString } from "lodash";
 
@@ -28,7 +30,8 @@ export const add: Handler = (
     let cleanClient = data.client;
     if (data.client !== undefined) {
         cleanClient = cleanEmptyStrings(data.client);
-        cleanClient.userAgent = cleanClient.userAgent || event.requestContext.identity.userAgent;
+        cleanClient.userAgent =
+            cleanClient.userAgent || event.requestContext.identity.userAgent;
         cleanClient.ip = event.requestContext.identity.sourceIp;
     }
 
@@ -48,7 +51,6 @@ export const add: Handler = (
             client: cleanClient,
             type,
             data: cleanData,
-            event,
             createdAt: timestamp
         }
     };
@@ -96,4 +98,29 @@ const cleanEmptyStrings = obj => {
         return newArr;
     }
     return obj;
+};
+
+/**
+ * Generate a sha256 hash of the client information
+ * as a unique identifier.
+ *
+ * @param clientInfo object
+ */
+const generateUserHash = clientInfo => {
+    let userId = clientInfo.ip;
+    userId += clientInfo.appCodeName || "";
+    userId += clientInfo.appName || "";
+    userId += clientInfo.appVersion || "";
+    userId += clientInfo.language || "";
+    userId += clientInfo.oscpu || "";
+    userId += clientInfo.platform || "";
+    userId += clientInfo.product || "";
+    userId += clientInfo.productSub || "";
+    userId += clientInfo.userAgent || "";
+    userId += clientInfo.vendor || "";
+    userId += clientInfo.vendorSub || "";
+
+    const hash = createHash("sha256");
+    hash.update(userId);
+    return hash.digest("hex");
 };
