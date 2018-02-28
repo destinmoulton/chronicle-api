@@ -43,6 +43,7 @@ export const add: Handler = (
     const type = data.type || "log";
     const app = data.app || "Unknown App";
     const userId = generateUserHash(cleanClient);
+    const trace = data.trace || null;
 
     const params = {
         TableName: logTableName,
@@ -53,6 +54,7 @@ export const add: Handler = (
             client: cleanClient,
             data: cleanData,
             type,
+            trace,
             createdAt: timestamp
         }
     };
