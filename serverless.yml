@@ -42,6 +42,7 @@ functions:
       - http: 
           path: /
           method: post
+          cors: true
   queryPost:
     handler: src/query.query
     name: ${self:custom.lambdaPrefix}-query-post
@@ -49,6 +50,7 @@ functions:
       - http: 
           path: /query
           method: post
+          cors: true
   queryOptions:
     handler: src/cors.cors
     name: ${self:custom.lambdaPrefix}-query-options
@@ -63,6 +65,7 @@ functions:
       - http: 
           path: /apps
           method: get
+          cors: true
   appsOptions:
     handler: src/cors.cors
     name: ${self:custom.lambdaPrefix}-apps-options
@@ -84,6 +87,7 @@ functions:
       - http: 
           path: /logtypes
           method: post
+          cors: true
 
 resources:  
   Resources:
