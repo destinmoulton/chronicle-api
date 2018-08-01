@@ -12,6 +12,8 @@ provider:
   name: aws
   stage: prod
   runtime: nodejs6.10
+  memorySize: 512
+  timeout: 10
   region: us-east-1
   deploymentBucket:
     name: ${self:custom.bucketName}
@@ -107,6 +109,6 @@ resources:
             AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
         TableName: ${self:custom.tableName}
