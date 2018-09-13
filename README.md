@@ -39,3 +39,7 @@ Example Query:
 ```
 
 NOTE: "comparison" defaults to "=" and "bool" defaults to "AND".
+
+### License
+
+MIT
